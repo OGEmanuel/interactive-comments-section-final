@@ -5,6 +5,7 @@ import { Delete, Edit, Reply } from './utility-buttons';
 
 type CardProps = {
   onReplyClick: (id: string | undefined) => void;
+  onOpenModal?: () => void;
   id: string | undefined;
   className: string;
   content: string;
@@ -20,6 +21,7 @@ type CardProps = {
 const Card = (props: CardProps) => {
   const {
     onReplyClick,
+    onOpenModal,
     id,
     content,
     className,
@@ -49,7 +51,7 @@ const Card = (props: CardProps) => {
           )}
           {user.username === curUser?.username && (
             <div className="flex items-center gap-4">
-              <button>
+              <button onClick={onOpenModal}>
                 <Delete />
               </button>
               <button>

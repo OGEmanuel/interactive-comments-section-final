@@ -16,7 +16,8 @@ const date = new Date();
 const Input = (props: InputPropsType) => {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const { curUser, type, replyingTo, url, hideInput } = props;
-  let setId = useId();
+  // let setId = useId();
+  let setId = 5;
 
   const header = {
     headers: {
@@ -28,6 +29,8 @@ const Input = (props: InputPropsType) => {
     e.preventDefault();
 
     if (!commentRef.current?.value) return;
+
+    setId++;
 
     let body;
 

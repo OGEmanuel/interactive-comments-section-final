@@ -2,16 +2,20 @@ import { useState } from 'react';
 import { replies, userTypes } from './data-types';
 import Card from './ui/card';
 import Input from './ui/input';
+import Modal from './ui/modal';
 
 type ReplyPropsType = {
+  modalActive: () => void;
   replies: replies;
   curUser: userTypes | undefined;
   commentId: string;
+  modalOpen: boolean;
 };
 
 const Reply = (props: ReplyPropsType) => {
   const [isReplying, setIsReplying] = useState<string | undefined>(undefined);
-  const { replies, curUser, commentId } = props;
+  const { replies, curUser, commentId, modalActive, modalOpen } = props;
+  // , onOpenModal, modalOpen
 
   const handleReplyClick = (id: string | undefined) => {
     if (isReplying === id) {
@@ -35,6 +39,7 @@ const Reply = (props: ReplyPropsType) => {
         score={replies.score}
         user={replies.user}
         curUser={curUser}
+        onOpenModal={modalActive}
       />
       {replies.user.username !== curUser?.username &&
         isReplying === replies.id && (
@@ -48,6 +53,13 @@ const Reply = (props: ReplyPropsType) => {
             />
           </div>
         )}
+
+      {modalOpen && (
+        <Modal
+          url={`http://localhost:8080/delete-reply/${commentId}?repId=${replies.id}`}
+          modalActive={modalActive}
+        />
+      )}
     </>
   );
 };
